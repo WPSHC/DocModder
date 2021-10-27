@@ -1,5 +1,5 @@
-# doc-modder
-Takes in arguments, searches and replaces a .docx Word template. For onboarding new users.
+# DocModder
+A Python script that takes in arguments, searches and replaces text in a .docx Word template. For onboarding new users.
 
 # Example Use
 - Powershell
