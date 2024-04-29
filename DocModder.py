@@ -3,7 +3,7 @@
  Script Name   :DocModder.py
  Description   :Takes in arguments, searches and replaces a .docx Word template. For onboarding new users.
  Author        :Andrew Campeau
- Last Compiled :2020-08-06
+ Last Compiled :2023-03-16
  Args          :-h, --help            show this help message and exit
                 -e EMAIL, --email EMAIL
                 -n NAME, --name NAME
@@ -116,7 +116,7 @@ my_parser.add_argument('-t', '--tempPath', dest='tempPath', action='store')
 my_parser.add_argument('-s', '--savePath', dest='savePath', action='store')
 
 results = my_parser.parse_args()
-print(vars(results))
+#print(vars(results))
 
 doc = docx.Document(results.tempPath)
 docx_find_replace_text(doc, '[Email]', results.email)
@@ -124,3 +124,25 @@ docx_find_replace_text(doc, '[FullName]', results.name)
 docx_find_replace_text(doc, '[Username]', results.username)
 docx_find_replace_text(doc, '[Password]', results.password)
 doc.save(results.savePath)
+
+import argparse
+
+def process_replacements(replacements_str):
+    replacements = {}
+    split = replacements_str.split(',')
+    for i in range(0, len(split), 2):
+        word = split[i].strip()
+        replacement = split[i+1].strip()
+        replacements[word] = replacement
+    return replacements
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--replacements", help="pairs for word-replace separated by comma", required=True)
+    args = parser.parse_args()
+
+    replacements = process_replacements(args.replacements)
+    print('Processed replacements:', replacements)
+
+if __name__ == "__main__":
+    main()
